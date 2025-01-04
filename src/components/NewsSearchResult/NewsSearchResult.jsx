@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import TwitterShare from './TwitterShare/TwitterShare';
+import TwitterShare from '../TwitterShare/TwitterShare';
+import './NewsSearchResult.css';
 
 const NewsSearchResult = ({ news }) => {
     const [tweetInfo, setTweetInfo] = useState(null);
@@ -22,10 +23,10 @@ const NewsSearchResult = ({ news }) => {
     };
 
     return (
-        <div style={{ border: '1px solid #ccc', padding: '10px', margin: '10px 0' }}>
-            <h2>{news.name}</h2>
-            <p>{news.description}</p>
-            <a href={news.url} target="_blank" rel="noopener noreferrer">Read more</a>
+        <div className="news-container">
+            <h2 className="news-title">{news.name}</h2>
+            <p className="news-description">{news.description}</p>
+            <a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">Read more</a>
             <button onClick={fetchTweetInfo}>Get Tweet Info</button>
             {tweetInfo && (
                 <TwitterShare tweetInfo={tweetInfo} news={news} />

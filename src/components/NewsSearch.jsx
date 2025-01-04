@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import NewsSearchResult from './NewsSearchResult';
+import NewsSearchResult from './NewsSearchResult/NewsSearchResult';
 
 const API_KEY = process.env.REACT_APP_API_X_FUNCTIONS_KEY;
 const MIN_CHARACTERS = 6;
