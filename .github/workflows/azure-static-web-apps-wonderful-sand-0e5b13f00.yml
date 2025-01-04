@@ -33,7 +33,7 @@ jobs:
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
-          NODE_VERSION: 22.12.0
+          NODE_VERSION: 22.9.0
           REACT_APP_API_X_FUNCTIONS_KEY: ${{ secrets.REACT_APP_API_X_FUNCTIONS_KEY }}
 
   close_pull_request_job:
