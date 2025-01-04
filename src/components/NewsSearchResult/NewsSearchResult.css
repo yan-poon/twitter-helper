@@ -1,12 +1,12 @@
 .news-container {
     border: 1px solid #ccc;
     padding: 10px;
-    margin: 10px 0;
+    margin: 10px 0; /* Add margin to create space between each NewsSearchResult */
     border-radius: 5px;
     box-sizing: border-box;
     width: 100%;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 10px auto; /* Adjusted to add space between each result */
 }
 
 .news-title {
