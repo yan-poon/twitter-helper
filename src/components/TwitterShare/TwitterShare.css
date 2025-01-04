@@ -30,3 +30,50 @@
     max-width: 200px;
     align-self: center;
 }
+
+.twitter-share-container {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.twitter-share-textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    margin-bottom: 10px;
+}
+
+.twitter-share-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #1DA1F2;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    max-width: 200px;
+    align-self: center;
+}
+
+@media (max-width: 600px) {
+    .twitter-share-container {
+        padding: 5px;
+    }
+
+    .twitter-share-textarea {
+        padding: 8px;
+    }
+
+    .twitter-share-button {
+        padding: 8px 16px;
+    }
+}

@@ -48,7 +48,7 @@ const NewsSearch = () => {
         }
         setNewsFeed([]); // Clean up previous results
         try {
-            const response = await fetch(`https://one-leiaws-fa-python.azurewebsites.net/api/bing-news-search?q=${query}`, {
+            const response = await fetch(`https://one-leiaws-fa-python.azurewebsites.net/api/bing-news-search?q=${query}&count=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-functions-key': API_KEY
