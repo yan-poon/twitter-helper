@@ -2,15 +2,18 @@ import React, { useState } from 'react';
 import TwitterShare from '../TwitterShare/TwitterShare';
 import './NewsSearchResult.css';
 
+const API_KEY = process.env.REACT_APP_API_X_FUNCTIONS_KEY;
+const API_BASE_URL=process.env.REACT_APP_API_BASE_URL;
+
 const NewsSearchResult = ({ news }) => {
     const [tweetInfo, setTweetInfo] = useState(null);
 
     const fetchTweetInfo = async () => {
-        const response = await fetch('https://one-leiaws-fa-python.azurewebsites.net/api/openai-tweet', {
+        const response = await fetch(`${API_BASE_URL}/openai-tweet`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-functions-key': process.env.REACT_APP_API_X_FUNCTIONS_KEY
+                'x-functions-key': API_KEY
             },
             body: JSON.stringify({
                 name: news.name,

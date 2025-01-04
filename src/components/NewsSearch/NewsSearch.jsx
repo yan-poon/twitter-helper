@@ -3,6 +3,7 @@ import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import './NewsSearch.css';
 
 const API_KEY = process.env.REACT_APP_API_X_FUNCTIONS_KEY;
+const API_BASE_URL=process.env.REACT_APP_API_BASE_URL;
 const MIN_CHARACTERS = 6;
 
 const NewsSearch = () => {
@@ -20,7 +21,7 @@ const NewsSearch = () => {
 
     const fetchSuggestions = async (query) => {
         try {
-            const response = await fetch(`https://one-leiaws-fa-python.azurewebsites.net/api/bing-autosuggest?q=${query}`, {
+            const response = await fetch(`${API_BASE_URL}/bing-autosuggest?q=${query}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-functions-key': API_KEY
@@ -48,7 +49,7 @@ const NewsSearch = () => {
         }
         setNewsFeed([]); // Clean up previous results
         try {
-            const response = await fetch(`https://one-leiaws-fa-python.azurewebsites.net/api/bing-news-search?q=${query}&count=100`, {
+            const response = await fetch(`${API_BASE_URL}/bing-news-search?q=${query}&count=100`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'x-functions-key': API_KEY
