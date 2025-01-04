@@ -11,10 +11,8 @@ const NewsSearch = () => {
     const isSelecting = useRef(false);
 
     useEffect(() => {
-        if (query.length > MIN_CHARACTERS && !isSelecting.current && query.length%3 === 0) {
+        if (query.length > MIN_CHARACTERS && !isSelecting.current && query.length % 3 === 0) {
             fetchSuggestions(query);
-        } else {
-            setSearchTextSuggestions([]);
         }
         isSelecting.current = false;
     }, [query]);
@@ -30,7 +28,7 @@ const NewsSearch = () => {
             const data = await response.json();
             setSearchTextSuggestions(data.suggestions);
         } catch (error) {
-            
+            console.error('Error fetching suggestions:', error);
         }
     };
 
@@ -42,14 +40,25 @@ const NewsSearch = () => {
 
     const handleSearch = async () => {
         setNewsFeed([]); // Clean up previous results
-        const response = await fetch(`https://one-leiaws-fa-python.azurewebsites.net/api/bing-news-search?q=${query}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'x-functions-key': API_KEY
-            }
-        });
-        const data = await response.json();
-        setNewsFeed(data.news_feed);
+        setSearchTextSuggestions([]); // Close the dropdown of suggestion text
+        try {
+            const response = await fetch(`https://one-leiaws-fa-python.azurewebsites.net/api/bing-news-search?q=${query}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-functions-key': API_KEY
+                }
+            });
+            const data = await response.json();
+            setNewsFeed(data.news_feed);
+        } catch (error) {
+            console.error('Error fetching news:', error);
+        }
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            handleSearch();
+        }
     };
 
     return (
@@ -61,6 +70,7 @@ const NewsSearch = () => {
                 style={{ width: '400px' }}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={handleKeyDown}
             />
             <button onClick={handleSearch}>Search</button>
             {searchTextSuggestions.length > 0 && (
