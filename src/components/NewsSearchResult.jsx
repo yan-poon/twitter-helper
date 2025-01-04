@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TwitterShare from './TwitterShare';
+import TwitterShare from './TwitterShare/TwitterShare';
 
 const NewsSearchResult = ({ news }) => {
     const [tweetInfo, setTweetInfo] = useState(null);
