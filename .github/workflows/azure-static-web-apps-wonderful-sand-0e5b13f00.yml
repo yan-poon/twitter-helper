@@ -43,6 +43,7 @@ jobs:
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
+          CI: false
           NODE_VERSION: 22.9.0
           REACT_APP_API_X_FUNCTIONS_KEY: ${{ secrets.REACT_APP_API_X_FUNCTIONS_KEY }}
 
