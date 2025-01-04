@@ -57,6 +57,9 @@ const NewsSearch = () => {
             });
             const data = await response.json();
             setNewsFeed(data.news_feed);
+            if(data.count===0){
+                alert('No news was found');
+            }
         } catch (error) {
             console.error('Error fetching news:', error);
         }
