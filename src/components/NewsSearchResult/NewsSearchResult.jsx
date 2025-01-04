@@ -5,11 +5,11 @@ import './NewsSearchResult.css';
 const API_KEY = process.env.REACT_APP_API_X_FUNCTIONS_KEY;
 const API_BASE_URL=process.env.REACT_APP_API_BASE_URL;
 
-const NewsSearchResult = ({ news }) => {
+const NewsSearchResult = ({ news, summaryLanguage="English", tweetLanguage="English" }) => {
     const [tweetInfo, setTweetInfo] = useState(null);
 
     const fetchTweetInfo = async () => {
-        const response = await fetch(`${API_BASE_URL}/openai-tweet`, {
+        const response = await fetch(`${API_BASE_URL}/openai-tweet?summaryLanguage=${summaryLanguage}&tweetLanguage=${tweetLanguage}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

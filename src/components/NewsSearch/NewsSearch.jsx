@@ -8,6 +8,8 @@ const MIN_CHARACTERS = 6;
 
 const NewsSearch = () => {
     const [query, setQuery] = useState('');
+    const [summaryLanguage, setSummaryLanguage] = useState('English');
+    const [tweetLanguage, setTweetLanguage] = useState('English');
     const [searchTextSuggestions, setSearchTextSuggestions] = useState([]);
     const [newsFeed, setNewsFeed] = useState([]);
     const isSelecting = useRef(false);
@@ -43,7 +45,6 @@ const NewsSearch = () => {
     const handleSearch = async () => {
         setSearchTextSuggestions([]); // Close the dropdown of suggestion text
         if (query.trim().length === 0) {
-
             alert('Please enter a search query');
             return;
         }
@@ -57,7 +58,7 @@ const NewsSearch = () => {
             });
             const data = await response.json();
             setNewsFeed(data.news_feed);
-            if(data.count===0){
+            if (data.count === 0) {
                 alert('No news was found');
             }
         } catch (error) {
@@ -74,14 +75,40 @@ const NewsSearch = () => {
     return (
         <div className="news-search-container">
             <h1>News Search</h1>
-            <input
-                type="text"
-                placeholder="Search news..."
-                className="news-search-input"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                onKeyDown={handleKeyDown}
-            />
+            <div className="input-group">
+                <label htmlFor="summary-language">Summary Language</label>
+                <input
+                    type="text"
+                    id="summary-language"
+                    placeholder="Summary Language"
+                    className="news-search-input"
+                    value={summaryLanguage}
+                    onChange={(e) => setSummaryLanguage(e.target.value)}
+                />
+            </div>
+            <div className="input-group">
+                <label htmlFor="tweet-language">Tweet Language</label>
+                <input
+                    type="text"
+                    id="tweet-language"
+                    placeholder="Tweet Language"
+                    className="news-search-input"
+                    value={tweetLanguage}
+                    onChange={(e) => setTweetLanguage(e.target.value)}
+                />
+            </div>
+            <div className="input-group">
+                <label htmlFor="search-news">Search News</label>
+                <input
+                    type="text"
+                    id="search-news"
+                    placeholder="Search news..."
+                    className="news-search-input"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+            </div>
             <button onClick={handleSearch} className="news-search-button">Search</button>
             {searchTextSuggestions.length > 0 && (
                 <ul className="suggestions-list">
@@ -98,7 +125,7 @@ const NewsSearch = () => {
             )}
             <div>
                 {newsFeed.map((news, index) => (
-                    <NewsSearchResult key={index} news={news} />
+                    <NewsSearchResult key={index} news={news} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage}/>
                 ))}
             </div>
         </div>

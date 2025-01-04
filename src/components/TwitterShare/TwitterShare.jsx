@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import './TwitterShare.css';
 
 const TwitterShare = ({ tweetInfo, news }) => {
-    const [tweetText, setTweetText] = useState(`${tweetInfo.tweet}\n\n${news.url}`);
+    const [tweetText, setTweetText] = useState(tweetInfo.tweet);
     const textareaRef = useRef(null);
 
     const shareOnTwitter = () => {
