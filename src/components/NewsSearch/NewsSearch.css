@@ -6,13 +6,29 @@
     margin: 0 auto;
 }
 
+.input-group {
+    margin-bottom: 10px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
 .news-search-input {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
     border-radius: 5px;
     border: 1px solid #ccc;
-    margin-bottom: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px; /* Space between buttons */
+    margin-bottom: 20px;
 }
 
 .news-search-button {
@@ -24,7 +40,6 @@
     cursor: pointer;
     width: 100%;
     max-width: 200px;
-    margin-bottom: 20px;
 }
 
 .suggestions-list {

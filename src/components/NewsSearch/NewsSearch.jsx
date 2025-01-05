@@ -3,7 +3,7 @@ import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import './NewsSearch.css';
 
 const API_KEY = process.env.REACT_APP_API_X_FUNCTIONS_KEY;
-const API_BASE_URL=process.env.REACT_APP_API_BASE_URL;
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const MIN_CHARACTERS = 6;
 
 const NewsSearch = () => {
@@ -72,6 +72,10 @@ const NewsSearch = () => {
         }
     };
 
+    const handleClearResults = () => {
+        setNewsFeed([]);
+    };
+
     return (
         <div className="news-search-container">
             <h1>News Search</h1>
@@ -109,7 +113,10 @@ const NewsSearch = () => {
                     onKeyDown={handleKeyDown}
                 />
             </div>
-            <button onClick={handleSearch} className="news-search-button">Search</button>
+            <div className="button-group">
+                <button onClick={handleSearch} className="news-search-button">Search</button>
+                <button onClick={handleClearResults} className="news-search-button">Clear Search Results</button>
+            </div>
             {searchTextSuggestions.length > 0 && (
                 <ul className="suggestions-list">
                     {searchTextSuggestions.map((suggestion, index) => (
@@ -125,7 +132,7 @@ const NewsSearch = () => {
             )}
             <div>
                 {newsFeed.map((news, index) => (
-                    <NewsSearchResult key={index} news={news} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage}/>
+                    <NewsSearchResult key={index} news={news} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage} />
                 ))}
             </div>
         </div>
