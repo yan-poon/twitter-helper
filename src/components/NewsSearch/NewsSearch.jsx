@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
+import { fetchAutoSuggest, fetchNews } from '../../services/ApiService';
 import './NewsSearch.css';
 
-const API_KEY = process.env.REACT_APP_API_X_FUNCTIONS_KEY;
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 const MIN_CHARACTERS = 6;
 
 const NewsSearch = () => {
@@ -24,14 +23,8 @@ const NewsSearch = () => {
 
     const fetchSuggestions = async (query) => {
         try {
-            const response = await fetch(`${API_BASE_URL}/bing-autosuggest?q=${query}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-functions-key': API_KEY
-                }
-            });
-            const data = await response.json();
-            setSearchTextSuggestions(data.suggestions);
+            const response = await fetchAutoSuggest(query)
+            setSearchTextSuggestions(response.suggestions);
         } catch (error) {
             console.error('Error fetching suggestions:', error);
         }
@@ -52,16 +45,10 @@ const NewsSearch = () => {
         }
         setNewsFeed([]); // Clean up previous results
         try {
-            const response = await fetch(`${API_BASE_URL}/bing-news-search?q=${query}&count=100`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-functions-key': API_KEY
-                }
-            });
-            const data = await response.json();
-            setNewsFeed(data.news_feed);
-            setResultCount(data.count);
-            if (data.count === 0) {
+            const response = await fetchNews(query);
+            setNewsFeed(response.news_feed);
+            setResultCount(response.count);
+            if (response.count === 0) {
                 alert('No news was found');
             }
         } catch (error) {

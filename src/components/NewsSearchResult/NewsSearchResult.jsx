@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import TwitterShare from '../TwitterShare/TwitterShare';
+import { fetchAISummaryAndTweetInfo } from '../../services/ApiService';
 import './NewsSearchResult.css';
-
-const API_KEY = process.env.REACT_APP_API_X_FUNCTIONS_KEY;
-const API_BASE_URL=process.env.REACT_APP_API_BASE_URL;
 
 const formatDate = (datePublished) => {
     const date = new Date(datePublished);
@@ -20,20 +18,8 @@ const NewsSearchResult = ({ news, summaryLanguage="English", tweetLanguage="Engl
 
     const fetchTweetInfo = async () => {
         setTweetInfo(null);
-        const response = await fetch(`${API_BASE_URL}/openai-tweet?summaryLanguage=${summaryLanguage}&tweetLanguage=${tweetLanguage}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-functions-key': API_KEY
-            },
-            body: JSON.stringify({
-                name: news.name,
-                description: news.description,
-                url: news.url
-            })
-        });
-        const data = await response.json();
-        setTweetInfo(data.tweet);
+        const response = await fetchAISummaryAndTweetInfo(news,summaryLanguage,tweetLanguage)
+        setTweetInfo(response.tweet);
     };
 
     return (
