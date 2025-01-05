@@ -12,6 +12,7 @@ const NewsSearch = () => {
     const [tweetLanguage, setTweetLanguage] = useState('English');
     const [searchTextSuggestions, setSearchTextSuggestions] = useState([]);
     const [newsFeed, setNewsFeed] = useState([]);
+    const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
     const isSelecting = useRef(false);
 
     useEffect(() => {
@@ -44,6 +45,7 @@ const NewsSearch = () => {
 
     const handleSearch = async () => {
         setSearchTextSuggestions([]); // Close the dropdown of suggestion text
+        setResultCount(0);
         if (query.trim().length === 0) {
             alert('Please enter a search query');
             return;
@@ -58,6 +60,7 @@ const NewsSearch = () => {
             });
             const data = await response.json();
             setNewsFeed(data.news_feed);
+            setResultCount(data.count);
             if (data.count === 0) {
                 alert('No news was found');
             }
@@ -74,6 +77,7 @@ const NewsSearch = () => {
 
     const handleClearResults = () => {
         setNewsFeed([]);
+        setResultCount(0);
     };
 
     return (
@@ -117,6 +121,11 @@ const NewsSearch = () => {
                 <button onClick={handleSearch} className="news-search-button">Search</button>
                 <button onClick={handleClearResults} className="news-search-button">Clear Search Results</button>
             </div>
+            {resultCount > 0 && (
+                <div style={{ justifyContent: "flex-end", display: "flex" }}>
+                    <p>{`Number of results: ${resultCount}`}</p>
+                </div>
+            )}
             {searchTextSuggestions.length > 0 && (
                 <ul className="suggestions-list">
                     {searchTextSuggestions.map((suggestion, index) => (

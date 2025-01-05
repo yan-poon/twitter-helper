@@ -19,6 +19,7 @@ const NewsSearchResult = ({ news, summaryLanguage="English", tweetLanguage="Engl
     const [tweetInfo, setTweetInfo] = useState(null);
 
     const fetchTweetInfo = async () => {
+        setTweetInfo(null);
         const response = await fetch(`${API_BASE_URL}/openai-tweet?summaryLanguage=${summaryLanguage}&tweetLanguage=${tweetLanguage}`, {
             method: 'POST',
             headers: {
