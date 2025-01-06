@@ -48,9 +48,9 @@ const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "
                     <h3>New Insight</h3>
                     <p>{summary.newInsight}</p>
                     <h3>Summary</h3>
-                    <p>{summary.summary}</p>
-                    <h3>New Knowledge</h3>
-                    <p>{summary.newKnowledge}</p>
+                    {summary.summary.map((paragraph, index) => (
+                        <p key={index}>{paragraph}</p>
+                    ))}
                 </div>
             )}
             <p><button className="news-search-button" onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
