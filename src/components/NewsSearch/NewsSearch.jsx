@@ -10,8 +10,10 @@ const MIN_CHARACTERS = 6;
 const NewsSearch = () => {
     const { getAccessTokenSilently } = useAuth0();
     const [query, setQuery] = useState('');
-    const [summaryLanguage, setSummaryLanguage] = useState('English');
-    const [tweetLanguage, setTweetLanguage] = useState('English');
+    const defaultSummaryLanguage = localStorage.getItem('summaryLanguage') || 'English';
+    const [summaryLanguage, setSummaryLanguage] = useState(defaultSummaryLanguage);
+    const defaultTweetLanguage = localStorage.getItem('tweetLanguage') || 'English';
+    const [tweetLanguage, setTweetLanguage] = useState(defaultTweetLanguage);
     const [searchTextSuggestions, setSearchTextSuggestions] = useState([]);
     const [newsFeed, setNewsFeed] = useState([]);
     const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
@@ -23,6 +25,14 @@ const NewsSearch = () => {
         }
         isSelecting.current = false;
     }, [query]);
+
+    useEffect(() => {
+        localStorage.setItem('summaryLanguage', summaryLanguage);
+    }, [summaryLanguage]);
+
+    useEffect(() => {
+        localStorage.setItem('tweetLanguage', tweetLanguage);
+    }, [tweetLanguage]);
 
     const fetchSuggestions = async (query) => {
         try {

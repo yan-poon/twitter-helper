@@ -35,7 +35,7 @@ const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "
             <p>{formatDate(news.datePublished)}</p>
             <p className="news-description">{news.description}</p>
             <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">Read more</a></p>
-            <p><button onClick={fetchSummaryFromApi}>Get Summary</button></p>
+            <p><button className="news-search-button" onClick={fetchSummaryFromApi}>Get Summary</button></p>
             {summary && (
                 <div className="summary-container">
                     <h3>New Insight</h3>
@@ -46,7 +46,7 @@ const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "
                     <p>{summary.newKnowledge}</p>
                 </div>
             )}
-            <p><button onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
+            <p><button className="news-search-button" onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
             {tweetInfo && (
                 <TwitterShare tweetInfo={tweetInfo} news={news} />
             )}
