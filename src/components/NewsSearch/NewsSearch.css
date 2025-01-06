@@ -16,7 +16,8 @@
     font-weight: bold;
 }
 
-.news-search-input {
+.news-search-input,
+.news-search-select {
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
@@ -66,7 +67,8 @@
         padding: 10px;
     }
 
-    .news-search-input {
+    .news-search-input,
+    .news-search-select {
         padding: 8px;
     }
 

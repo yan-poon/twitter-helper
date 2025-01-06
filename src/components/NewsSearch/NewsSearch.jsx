@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import { fetchAutoSuggest, fetchNews } from '../../services/ApiService';
+import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './NewsSearch.css';
 
 const MIN_CHARACTERS = 6;
@@ -74,28 +75,16 @@ const NewsSearch = () => {
     return (
         <div className="news-search-container">
             <h1>News Search</h1>
-            <div className="input-group">
-                <label htmlFor="summary-language">Summary Language</label>
-                <input
-                    type="text"
-                    id="summary-language"
-                    placeholder="Summary Language"
-                    className="news-search-input"
+            <LanguageSelect
+                label="Summary Language"
                     value={summaryLanguage}
                     onChange={(e) => setSummaryLanguage(e.target.value)}
                 />
-            </div>
-            <div className="input-group">
-                <label htmlFor="tweet-language">Tweet Language</label>
-                <input
-                    type="text"
-                    id="tweet-language"
-                    placeholder="Tweet Language"
-                    className="news-search-input"
+            <LanguageSelect
+                label="Tweet Language"
                     value={tweetLanguage}
                     onChange={(e) => setTweetLanguage(e.target.value)}
                 />
-            </div>
             <div className="input-group">
                 <label htmlFor="search-news">Search News</label>
                 <input
