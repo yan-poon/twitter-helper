@@ -13,8 +13,6 @@ const TwitterShare = ({ tweetInfo, news }) => {
     return (
         <div className="twitter-share-container">
             <div>
-                <h4>Usefulness</h4>
-                <p>{`${tweetInfo.informative}/10 (10 out of 10 implies must share)`}</p>
                 <h4>Summary</h4>
                 <p>{tweetInfo.summary}</p>
             </div>
@@ -25,7 +23,7 @@ const TwitterShare = ({ tweetInfo, news }) => {
                     ref={textareaRef}
                     value={tweetText}
                     onChange={(e) => setTweetText(e.target.value)}
-                    rows={10}
+                    rows={6}
                     className="twitter-share-textarea"
                 />
                 <h5>Suggested Hashtag</h5>
@@ -34,6 +32,15 @@ const TwitterShare = ({ tweetInfo, news }) => {
                     readOnly
                     className="twitter-share-textarea"
                 />
+                <div>
+                <h5>Suggested Instruction for Image Gen AI</h5>
+                <textarea
+                    value={tweetInfo.instrToImageAI}
+                    readOnly
+                    rows={6}
+                    className="twitter-share-textarea"
+                />
+                </div>
                 <button onClick={shareOnTwitter} className="twitter-share-button">Share on Twitter</button>
             </div>
         </div>
