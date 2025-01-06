@@ -1,28 +1,32 @@
 import React, { useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import { fetchTweetInfo, fetchSummary } from '../../services/ApiService';
 import TwitterShare from '../TwitterShare/TwitterShare';
-import { fetchAISummaryAndTweetInfo } from '../../services/ApiService';
 import './NewsSearchResult.css';
 
-const formatDate = (datePublished) => {
-    const date = new Date(datePublished);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = date.toLocaleString('default', { month: 'short' });
-    const year = date.getFullYear();
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `${day} ${month} ${year} ${hours}:${minutes}`;
-};
-
-const NewsSearchResult = ({ news, summaryLanguage="English", tweetLanguage="English" }) => {
+const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "English" }) => {
     const [tweetInfo, setTweetInfo] = useState(null);
-    const { getAccessTokenSilently } = useAuth0();
+    const [summary, setSummary] = useState('');
 
-    const fetchTweetInfo = async () => {
+    const fetchTweetInfoFromApi = async () => {
         setTweetInfo(null);
-        const accessToken = await getAccessTokenSilently();
-        const response = await fetchAISummaryAndTweetInfo(news,summaryLanguage,tweetLanguage,accessToken)
+        const response = await fetchTweetInfo(news, tweetLanguage);
         setTweetInfo(response.tweet);
+    };
+
+    const fetchSummaryFromApi = async () => {
+        setSummary('');
+        const response = await fetchSummary(news, summaryLanguage);
+        setSummary(response.info);
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = date.toLocaleString('default', { month: 'short' });
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${day} ${month} ${year} ${hours}:${minutes}`;
     };
 
     return (
@@ -31,7 +35,18 @@ const NewsSearchResult = ({ news, summaryLanguage="English", tweetLanguage="Engl
             <p>{formatDate(news.datePublished)}</p>
             <p className="news-description">{news.description}</p>
             <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">Read more</a></p>
-            <button onClick={fetchTweetInfo}>Get Summary and Tweet Suggestion</button>
+            <p><button onClick={fetchSummaryFromApi}>Get Summary</button></p>
+            {summary && (
+                <div className="summary-container">
+                    <h3>New Insight</h3>
+                    <p>{summary.newInsight}</p>
+                    <h3>Summary</h3>
+                    <p>{summary.summary}</p>
+                    <h3>New Knowledge</h3>
+                    <p>{summary.newKnowledge}</p>
+                </div>
+            )}
+            <p><button onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
             {tweetInfo && (
                 <TwitterShare tweetInfo={tweetInfo} news={news} />
             )}

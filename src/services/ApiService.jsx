@@ -37,8 +37,26 @@ export const fetchWebpages = async (query, accessToken,count=20, offset=0) => {
     return data;
 };
 
-export const fetchAISummaryAndTweetInfo = async (news, summaryLanguage, tweetLanguage, accessToken) => {
-    const response = await fetch(`${API_BASE_URL}/openai-tweet?summaryLanguage=${summaryLanguage}&tweetLanguage=${tweetLanguage}`, {
+export const fetchTweetInfo = async (news, tweetLanguage, accessToken) => {
+    const response = await fetch(`${API_BASE_URL}/openai-tweet?tweetLanguage=${tweetLanguage}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-functions-key': API_KEY,
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({
+            name: news.name,
+            description: news.description,
+            url: news.url
+        })
+    });
+    const data = await response.json();
+    return data
+};
+
+export const fetchSummary = async (news, summaryLanguage, accessToken) => {
+    const response = await fetch(`${API_BASE_URL}/openai-summary?summaryLanguage=${summaryLanguage}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
