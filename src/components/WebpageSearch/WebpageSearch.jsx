@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
-import { fetchAutoSuggest, fetchNews } from '../../services/ApiService';
-import './NewsSearch.css';
+import { fetchAutoSuggest, fetchWebpages } from '../../services/ApiService';
+import './WebpageSearch.css';
 
 const MIN_CHARACTERS = 6;
 
-const NewsSearch = () => {
+const WebpageSearch = () => {
     const { getAccessTokenSilently } = useAuth0();
     const [query, setQuery] = useState('');
     const [summaryLanguage, setSummaryLanguage] = useState('English');
     const [tweetLanguage, setTweetLanguage] = useState('English');
     const [searchTextSuggestions, setSearchTextSuggestions] = useState([]);
-    const [newsFeed, setNewsFeed] = useState([]);
+    const [webpages, setWebpages] = useState([]);
     const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
     const isSelecting = useRef(false);
 
@@ -46,11 +46,11 @@ const NewsSearch = () => {
             alert('Please enter a search query');
             return;
         }
-        setNewsFeed([]); // Clean up previous results
+        setWebpages([]); // Clean up previous results
         try {
             const accessToken = await getAccessTokenSilently();
-            const response = await fetchNews(query,accessToken);
-            setNewsFeed(response.news_feed);
+            const response = await fetchWebpages(query,accessToken);
+            setWebpages(response.news_feed);
             setResultCount(response.count);
             if (response.count === 0) {
                 alert('No news was found');
@@ -67,13 +67,13 @@ const NewsSearch = () => {
     };
 
     const handleClearResults = () => {
-        setNewsFeed([]);
+        setWebpages([]);
         setResultCount(0);
     };
 
     return (
         <div className="news-search-container">
-            <h1>News Search</h1>
+            <h1>Webpage Search</h1>
             <div className="input-group">
                 <label htmlFor="summary-language">Summary Language</label>
                 <input
@@ -100,7 +100,7 @@ const NewsSearch = () => {
                 <label htmlFor="search-news">Search News</label>
                 <input
                     type="text"
-                    id="search-news"
+                    id="Search Topic"
                     placeholder="Search news..."
                     className="news-search-input"
                     value={query}
@@ -131,12 +131,12 @@ const NewsSearch = () => {
                 </ul>
             )}
             <div>
-                {newsFeed.map((news, index) => (
-                    <NewsSearchResult key={index} news={news} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage} />
+                {webpages.map((webpage, index) => (
+                    <NewsSearchResult key={index} news={webpage} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage} />
                 ))}
             </div>
         </div>
     );
 };
 
-export default NewsSearch;
+export default WebpageSearch;

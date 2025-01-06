@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import TwitterShare from '../TwitterShare/TwitterShare';
 import { fetchAISummaryAndTweetInfo } from '../../services/ApiService';
 import './NewsSearchResult.css';
@@ -15,10 +16,12 @@ const formatDate = (datePublished) => {
 
 const NewsSearchResult = ({ news, summaryLanguage="English", tweetLanguage="English" }) => {
     const [tweetInfo, setTweetInfo] = useState(null);
+    const { getAccessTokenSilently } = useAuth0();
 
     const fetchTweetInfo = async () => {
         setTweetInfo(null);
-        const response = await fetchAISummaryAndTweetInfo(news,summaryLanguage,tweetLanguage)
+        const accessToken = await getAccessTokenSilently();
+        const response = await fetchAISummaryAndTweetInfo(news,summaryLanguage,tweetLanguage,accessToken)
         setTweetInfo(response.tweet);
     };
 
