@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import { fetchAutoSuggest, fetchWebpages } from '../../services/ApiService';
+import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './WebpageSearch.css';
 
 const MIN_CHARACTERS = 6;
@@ -9,11 +10,12 @@ const MIN_CHARACTERS = 6;
 const WebpageSearch = () => {
     const { getAccessTokenSilently } = useAuth0();
     const [query, setQuery] = useState('');
-    const [summaryLanguage, setSummaryLanguage] = useState('English');
-    const [tweetLanguage, setTweetLanguage] = useState('English');
+    const [summaryLanguage, setSummaryLanguage] = useState(localStorage.getItem('summaryLanguage') || 'English');
+    const [tweetLanguage, setTweetLanguage] = useState(localStorage.getItem('tweetLanguage') || 'English');
     const [searchTextSuggestions, setSearchTextSuggestions] = useState([]);
     const [webpages, setWebpages] = useState([]);
     const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
+    const [loadingwebpages, setLoadingwebpages] = useState(false); // State to track loading status
     const isSelecting = useRef(false);
 
     useEffect(() => {
@@ -22,6 +24,14 @@ const WebpageSearch = () => {
         }
         isSelecting.current = false;
     }, [query]);
+
+    useEffect(() => {
+        localStorage.setItem('summaryLanguage', summaryLanguage);
+    }, [summaryLanguage]);
+
+    useEffect(() => {
+        localStorage.setItem('tweetLanguage', tweetLanguage);
+    }, [tweetLanguage]);
 
     const fetchSuggestions = async (query) => {
         try {
@@ -47,9 +57,10 @@ const WebpageSearch = () => {
             return;
         }
         setWebpages([]); // Clean up previous results
+        setLoadingwebpages(true);
         try {
             const accessToken = await getAccessTokenSilently();
-            const response = await fetchWebpages(query,accessToken);
+            const response = await fetchWebpages(query, accessToken);
             setWebpages(response.news_feed);
             setResultCount(response.count);
             if (response.count === 0) {
@@ -58,6 +69,7 @@ const WebpageSearch = () => {
         } catch (error) {
             console.error('Error fetching news:', error);
         }
+        setLoadingwebpages(false);
     };
 
     const handleKeyDown = (e) => {
@@ -74,34 +86,22 @@ const WebpageSearch = () => {
     return (
         <div className="news-search-container">
             <h1>Webpage Search</h1>
-            <div className="input-group">
-                <label htmlFor="summary-language">Summary Language</label>
-                <input
-                    type="text"
-                    id="summary-language"
-                    placeholder="Summary Language"
-                    className="news-search-input"
-                    value={summaryLanguage}
-                    onChange={(e) => setSummaryLanguage(e.target.value)}
-                />
-            </div>
-            <div className="input-group">
-                <label htmlFor="tweet-language">Tweet Language</label>
-                <input
-                    type="text"
-                    id="tweet-language"
-                    placeholder="Tweet Language"
-                    className="news-search-input"
-                    value={tweetLanguage}
-                    onChange={(e) => setTweetLanguage(e.target.value)}
-                />
-            </div>
+            <LanguageSelect
+                label="Summary Language"
+                value={summaryLanguage}
+                onChange={(e) => setSummaryLanguage(e.target.value)}
+            />
+            <LanguageSelect
+                label="Tweet Language"
+                value={tweetLanguage}
+                onChange={(e) => setTweetLanguage(e.target.value)}
+            />
             <div className="input-group">
                 <label htmlFor="search-news">Search News</label>
                 <input
                     type="text"
                     id="Search Topic"
-                    placeholder="Search news..."
+                    placeholder="Search Webpage"
                     className="news-search-input"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -112,6 +112,7 @@ const WebpageSearch = () => {
                 <button onClick={handleSearch} className="news-search-button">Search</button>
                 <button onClick={handleClearResults} className="news-search-button">Clear Search Results</button>
             </div>
+            {loadingwebpages && <p>Loading Webpages...</p>}
             {resultCount > 0 && (
                 <div style={{ justifyContent: "flex-end", display: "flex" }}>
                     <p>{`Number of results: ${resultCount}`}</p>

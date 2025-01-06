@@ -54,7 +54,7 @@ const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "
                 </div>
             )}
             <p><button className="news-search-button" onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
-            {loadingTweet && <p>Loading tweet suggestion...</p>}
+            {loadingTweet && <p>Loading Tweet suggestion...</p>}
             {tweetInfo && (
                 <TwitterShare tweetInfo={tweetInfo} news={news} />
             )}
