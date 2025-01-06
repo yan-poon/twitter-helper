@@ -10,13 +10,12 @@ const MIN_CHARACTERS = 6;
 const NewsSearch = () => {
     const { getAccessTokenSilently } = useAuth0();
     const [query, setQuery] = useState('');
-    const defaultSummaryLanguage = localStorage.getItem('summaryLanguage') || 'English';
-    const [summaryLanguage, setSummaryLanguage] = useState(defaultSummaryLanguage);
-    const defaultTweetLanguage = localStorage.getItem('tweetLanguage') || 'English';
-    const [tweetLanguage, setTweetLanguage] = useState(defaultTweetLanguage);
+    const [summaryLanguage, setSummaryLanguage] = useState(localStorage.getItem('summaryLanguage') || 'English');
+    const [tweetLanguage, setTweetLanguage] = useState(localStorage.getItem('tweetLanguage') || 'English');
     const [searchTextSuggestions, setSearchTextSuggestions] = useState([]);
     const [newsFeed, setNewsFeed] = useState([]);
     const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
+    const [loadingNews, setLoadingNews] = useState(false); // State to track loading status
     const isSelecting = useRef(false);
 
     useEffect(() => {
@@ -37,7 +36,7 @@ const NewsSearch = () => {
     const fetchSuggestions = async (query) => {
         try {
             const accessToken = await getAccessTokenSilently();
-            const response = await fetchAutoSuggest(query, accessToken)
+            const response = await fetchAutoSuggest(query, accessToken);
             setSearchTextSuggestions(response.suggestions);
         } catch (error) {
             console.error('Error fetching suggestions:', error);
@@ -58,6 +57,7 @@ const NewsSearch = () => {
             return;
         }
         setNewsFeed([]); // Clean up previous results
+        setLoadingNews(true);
         try {
             const accessToken = await getAccessTokenSilently();
             const response = await fetchNews(query,accessToken);
@@ -69,6 +69,7 @@ const NewsSearch = () => {
         } catch (error) {
             console.error('Error fetching news:', error);
         }
+        setLoadingNews(false);
     };
 
     const handleKeyDown = (e) => {
@@ -111,6 +112,7 @@ const NewsSearch = () => {
                 <button onClick={handleSearch} className="news-search-button">Search</button>
                 <button onClick={handleClearResults} className="news-search-button">Clear Search Results</button>
             </div>
+            {loadingNews && <p>Loading news...</p>}
             {resultCount > 0 && (
                 <div style={{ justifyContent: "flex-end", display: "flex" }}>
                     <p>{`Number of results: ${resultCount}`}</p>

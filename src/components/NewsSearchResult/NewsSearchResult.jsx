@@ -6,17 +6,23 @@ import './NewsSearchResult.css';
 const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "English" }) => {
     const [tweetInfo, setTweetInfo] = useState(null);
     const [summary, setSummary] = useState('');
+    const [loadingSummary, setLoadingSummary] = useState(false);
+    const [loadingTweet, setLoadingTweet] = useState(false);
 
     const fetchTweetInfoFromApi = async () => {
+        setLoadingTweet(true);
         setTweetInfo(null);
         const response = await fetchTweetInfo(news, tweetLanguage);
         setTweetInfo(response.tweet);
+        setLoadingTweet(false);
     };
 
     const fetchSummaryFromApi = async () => {
+        setLoadingSummary(true);
         setSummary('');
         const response = await fetchSummary(news, summaryLanguage);
         setSummary(response.info);
+        setLoadingSummary(false);
     };
 
     const formatDate = (dateString) => {
@@ -36,6 +42,7 @@ const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "
             <p className="news-description">{news.description}</p>
             <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">Read more</a></p>
             <p><button className="news-search-button" onClick={fetchSummaryFromApi}>Get Summary</button></p>
+            {loadingSummary && <p>Loading summary...</p>}
             {summary && (
                 <div className="summary-container">
                     <h3>New Insight</h3>
@@ -47,6 +54,7 @@ const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "
                 </div>
             )}
             <p><button className="news-search-button" onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
+            {loadingTweet && <p>Loading tweet suggestion...</p>}
             {tweetInfo && (
                 <TwitterShare tweetInfo={tweetInfo} news={news} />
             )}
