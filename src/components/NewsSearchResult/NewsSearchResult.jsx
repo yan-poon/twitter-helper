@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { fetchTweetInfo, fetchSummary } from '../../services/ApiService';
 import TwitterShare from '../TwitterShare/TwitterShare';
+import SummaryContainer from '../Summary/SummaryContainer';
 import './NewsSearchResult.css';
 
 const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "English" }) => {
@@ -37,22 +38,20 @@ const NewsSearchResult = ({ news, summaryLanguage = "English", tweetLanguage = "
 
     return (
         <div className="news-container">
-            <h2 className="news-title">{news.name}</h2>
-            <p>{formatDate(news.datePublished)}</p>
-            <p className="news-description">{news.description}</p>
+            {news.name && (
+                <h2 className="news-title">{news.name}</h2>
+            )}
+            {
+                news.datePublished && (
+                    <p>{formatDate(news.datePublished)}</p>
+            )}
+            {news.description && (
+                <p className="news-description">{news.description}</p>
+            )}
             <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">Read more</a></p>
             <p><button className="news-search-button" onClick={fetchSummaryFromApi}>Get Summary</button></p>
             {loadingSummary && <p>Loading summary...</p>}
-            {summary && (
-                <div className="summary-container">
-                    <h3>New Insight</h3>
-                    <p>{summary.newInsight}</p>
-                    <h3>Summary</h3>
-                    {summary.summary.map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                    ))}
-                </div>
-            )}
+            {summary && <SummaryContainer summary={summary} />}
             <p><button className="news-search-button" onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
             {loadingTweet && <p>Loading Tweet suggestion...</p>}
             {tweetInfo && (
