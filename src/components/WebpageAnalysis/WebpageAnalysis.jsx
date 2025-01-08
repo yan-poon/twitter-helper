@@ -22,10 +22,6 @@ const WebpageAnalysis = () => {
 
     const handleAnalysis = async () => {
         setWebpage(null);
-        if (query.trim().length === 0) {
-            alert('Please enter a search query');
-            return;
-        }
         const dataObj={
             url: query,
             name: '',
