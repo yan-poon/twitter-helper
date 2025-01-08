@@ -21,6 +21,7 @@ const WebpageAnalysis = () => {
     }, [tweetLanguage]);
 
     const handleAnalysis = async () => {
+        setWebpage(null);
         if (query.trim().length === 0) {
             alert('Please enter a search query');
             return;
@@ -61,12 +62,20 @@ const WebpageAnalysis = () => {
                     placeholder="Search Webpage"
                     className="news-search-input"
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
+                    onChange={(e) => {
+                        setQuery(e.target.value)
+                        handleAnalysis()
+                    }}
+                    onKeyUp={(e) => {
+                        setQuery(e.target.value)
+                        handleAnalysis()
+                    }}
+                    onPaste={(e) => {
+                        setQuery(e.target.value)
+                        handleAnalysis()
+                    }}
                     onKeyDown={handleKeyDown}
                 />
-            </div>
-            <div className="button-group">
-                <button onClick={handleAnalysis} className="news-search-button">Analyse</button>
             </div>
             {webpage&& (
                 <NewsSearchResult news={webpage} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage} />

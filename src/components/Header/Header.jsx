@@ -14,7 +14,7 @@ const Header = ({ isAuthenticated, isLoading }) => {
                     {!isLoading && isAuthenticated && (
                         <>
                             <li><Link to="/news-search">News Search</Link></li>
-                            <li><Link to="/webpage-search">Webpage Search</Link></li>
+                            <li><Link to="/webpage-analysis">Webpage Analysis</Link></li>
                         </>
                     )}
                 </ul>

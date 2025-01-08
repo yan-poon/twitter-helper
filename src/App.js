@@ -17,7 +17,7 @@ function App() {
         <Header isAuthenticated={isAuthenticated} isLoading={isLoading} />
         <main className="main-content">
           <Routes>
-            <Route path="/about" element={<About />} />
+            <Route path="/about" element={<About isAuthenticated={isAuthenticated} isLoading={isLoading} />} />
             <Route path="/news-search" element={<AuthenticationGuard component={NewsSearch} />} />
             <Route path="/webpage-analysis" element={<AuthenticationGuard component={WebpageAnalysis} />} />
             <Route path="/" element={<About />} />
