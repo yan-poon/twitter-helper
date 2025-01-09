@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useTranslation } from 'react-i18next';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import { fetchNews } from '../../services/ApiService';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './NewsSearch.css';
 
-const MIN_CHARACTERS = 6;
-
 const NewsSearch = () => {
+    const { t } = useTranslation();
+
     const { getAccessTokenSilently } = useAuth0();
     const [query, setQuery] = useState('');
     const [summaryLanguage, setSummaryLanguage] = useState(localStorage.getItem('summaryLanguage') || 'English');
@@ -59,7 +60,7 @@ const NewsSearch = () => {
 
     return (
         <div className="news-search-container">
-            <h1>News Search</h1>
+            <h1>{t('news_search')}</h1>
             <LanguageSelect
                 label="Summary Language"
                     value={summaryLanguage}
@@ -83,8 +84,8 @@ const NewsSearch = () => {
                 />
             </div>
             <div className="button-group">
-                <button onClick={handleSearch} className="news-search-button">Search</button>
-                <button onClick={handleClearResults} className="news-search-button">Clear Search Results</button>
+                <button onClick={handleSearch} className="news-search-button">{t('search')}</button>
+                <button onClick={handleClearResults} className="news-search-button">{t('clear_search')}</button>
             </div>
             {loadingNews && <p>Loading news...</p>}
             {resultCount > 0 && (
