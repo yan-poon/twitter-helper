@@ -5,7 +5,7 @@ const SummaryContainer = ({ summary }) => {
     return (
         <div className="summary-container">
             <h3>New Insight</h3>
-            <p>{summary.newInsight}</p>
+            {summary.newInsight.map((paragraph, index) => (<p key={index}>{paragraph}</p>))}
             <h3>Summary</h3>
             {summary.summary.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
