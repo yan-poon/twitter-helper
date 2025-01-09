@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
-import { fetchAutoSuggest, fetchNews } from '../../services/ApiService';
+import { fetchNews } from '../../services/ApiService';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './NewsSearch.css';
 
@@ -12,18 +12,9 @@ const NewsSearch = () => {
     const [query, setQuery] = useState('');
     const [summaryLanguage, setSummaryLanguage] = useState(localStorage.getItem('summaryLanguage') || 'English');
     const [tweetLanguage, setTweetLanguage] = useState(localStorage.getItem('tweetLanguage') || 'English');
-    const [searchTextSuggestions, setSearchTextSuggestions] = useState([]);
     const [newsFeed, setNewsFeed] = useState([]);
     const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
     const [loadingNews, setLoadingNews] = useState(false); // State to track loading status
-    const isSelecting = useRef(false);
-
-    useEffect(() => {
-        if (query.length > MIN_CHARACTERS && !isSelecting.current && query.length % 3 === 0) {
-            fetchSuggestions(query);
-        }
-        isSelecting.current = false;
-    }, [query]);
 
     useEffect(() => {
         localStorage.setItem('summaryLanguage', summaryLanguage);
@@ -33,24 +24,7 @@ const NewsSearch = () => {
         localStorage.setItem('tweetLanguage', tweetLanguage);
     }, [tweetLanguage]);
 
-    const fetchSuggestions = async (query) => {
-        try {
-            const accessToken = await getAccessTokenSilently();
-            const response = await fetchAutoSuggest(query, accessToken);
-            setSearchTextSuggestions(response.suggestions);
-        } catch (error) {
-            console.error('Error fetching suggestions:', error);
-        }
-    };
-
-    const handleSuggestionClick = (suggestion) => {
-        isSelecting.current = true;
-        setQuery(suggestion);
-        setSearchTextSuggestions([]);
-    };
-
     const handleSearch = async () => {
-        setSearchTextSuggestions([]); // Close the dropdown of suggestion text
         setResultCount(0);
         if (query.trim().length === 0) {
             alert('Please enter a search query');
@@ -117,19 +91,6 @@ const NewsSearch = () => {
                 <div style={{ justifyContent: "flex-end", display: "flex" }}>
                     <p>{`Number of results: ${resultCount}`}</p>
                 </div>
-            )}
-            {searchTextSuggestions.length > 0 && (
-                <ul className="suggestions-list">
-                    {searchTextSuggestions.map((suggestion, index) => (
-                        <li
-                            key={index}
-                            onClick={() => handleSuggestionClick(suggestion)}
-                            className="suggestion-item"
-                        >
-                            {suggestion}
-                        </li>
-                    ))}
-                </ul>
             )}
             <div>
                 {newsFeed.map((news, index) => (
