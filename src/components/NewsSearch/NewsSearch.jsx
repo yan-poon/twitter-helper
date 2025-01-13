@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import MktSelector from './MktSelector'; 
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import { fetchNews } from '../../services/ApiService';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
@@ -15,6 +16,7 @@ const NewsSearch = () => {
     const [tweetLanguage, setTweetLanguage] = useState(localStorage.getItem('tweetLanguage') || 'English');
     const [newsFeed, setNewsFeed] = useState([]);
     const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
+    const [selectedMarket, setSelectedMarket] = useState('en-US');
     const [loadingNews, setLoadingNews] = useState(false); // State to track loading status
 
     useEffect(() => {
@@ -35,7 +37,7 @@ const NewsSearch = () => {
         setLoadingNews(true);
         try {
             const accessToken = await getAccessTokenSilently();
-            const response = await fetchNews(query,accessToken);
+            const response = await fetchNews(query,selectedMarket,accessToken);
             setNewsFeed(response.news_feed);
             setResultCount(response.count);
             if (response.count === 0) {
@@ -51,6 +53,10 @@ const NewsSearch = () => {
         if (e.key === 'Enter') {
             handleSearch();
         }
+    };
+
+    const handleMarketChange = (event) => {
+        setSelectedMarket(event.target.value);
     };
 
     const handleClearResults = () => {
@@ -83,6 +89,7 @@ const NewsSearch = () => {
                     onKeyDown={handleKeyDown}
                 />
             </div>
+                <MktSelector value={selectedMarket} onChange={handleMarketChange} />
             <div className="button-group">
                 <button onClick={handleSearch} className="news-search-button">{t('search')}</button>
                 <button onClick={handleClearResults} className="news-search-button">{t('clear_search')}</button>
