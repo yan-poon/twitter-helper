@@ -6,7 +6,6 @@ import About from './components/About/About';
 import Header from './components/Header/Header';
 import { useAuth0 } from "@auth0/auth0-react";
 import { AuthenticationGuard } from './components/AuthenticationGuard';
-import WebpageAnalysis from './components/WebpageAnalysis/WebpageAnalysis';
 import Footer from './components/Footer/Footer';
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18n';
@@ -22,7 +21,6 @@ function App() {
             <Routes>
               <Route path="/about" element={<About isAuthenticated={isAuthenticated} isLoading={isLoading} />} />
               <Route path="/news-search" element={<AuthenticationGuard component={NewsSearch} />} />
-              <Route path="/webpage-analysis" element={<AuthenticationGuard component={WebpageAnalysis} />} />
               <Route path="/" element={<About />} />
               <Route path="*" element={<About />} />
             </Routes>

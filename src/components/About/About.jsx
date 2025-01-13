@@ -8,7 +8,6 @@ const PageContent = () => {
             <div>Explore our features:
                 <ul>
                     <li><Link to="/news-search">News Search</Link></li>
-                    <li><Link to="/webpage-analysis">Webpage Analysis</Link></li>
                 </ul>
             </div>
         </div>

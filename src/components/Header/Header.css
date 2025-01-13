@@ -31,3 +31,12 @@
 .header nav ul li a:hover {
     text-decoration: underline;
 }
+
+.header-title-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.header-title-link:hover {
+    text-decoration: underline;
+}
