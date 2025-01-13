@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
-import MktSelector from './MktSelector'; 
+import MktSelector from './MktSelector';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import { fetchNews } from '../../services/ApiService';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
@@ -16,7 +16,7 @@ const NewsSearch = () => {
     const [tweetLanguage, setTweetLanguage] = useState(localStorage.getItem('tweetLanguage') || 'English');
     const [newsFeed, setNewsFeed] = useState([]);
     const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
-    const [selectedMarket, setSelectedMarket] = useState('en-US');
+    const [selectedMarket, setSelectedMarket] = useState(localStorage.getItem('mkt') || 'en-US');
     const [loadingNews, setLoadingNews] = useState(false); // State to track loading status
 
     useEffect(() => {
@@ -26,6 +26,10 @@ const NewsSearch = () => {
     useEffect(() => {
         localStorage.setItem('tweetLanguage', tweetLanguage);
     }, [tweetLanguage]);
+
+    useEffect(() => {
+        localStorage.setItem('mkt', selectedMarket);
+    }, [selectedMarket]);
 
     const handleSearch = async () => {
         setResultCount(0);
@@ -37,7 +41,7 @@ const NewsSearch = () => {
         setLoadingNews(true);
         try {
             const accessToken = await getAccessTokenSilently();
-            const response = await fetchNews(query,selectedMarket,accessToken);
+            const response = await fetchNews(query, selectedMarket, accessToken);
             setNewsFeed(response.news_feed);
             setResultCount(response.count);
             if (response.count === 0) {
@@ -65,42 +69,44 @@ const NewsSearch = () => {
     };
 
     return (
-        <div className="news-search-container">
-            <h1>{t('news_search')}</h1>
-            <LanguageSelect
-                label="Summary Language"
+        <div className="news-search-layout">
+            <div className="news-search-container">
+                <h1>{t('news_search')}</h1>
+                <LanguageSelect
+                    label="Summary Language"
                     value={summaryLanguage}
                     onChange={(e) => setSummaryLanguage(e.target.value)}
                 />
-            <LanguageSelect
-                label="Tweet Language"
+                <LanguageSelect
+                    label="Tweet Language"
                     value={tweetLanguage}
                     onChange={(e) => setTweetLanguage(e.target.value)}
                 />
-            <div className="input-group">
-                <label htmlFor="search-news">Search News</label>
-                <input
-                    type="text"
-                    id="search-news"
-                    placeholder="Search news..."
-                    className="news-search-input"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                />
-            </div>
                 <MktSelector value={selectedMarket} onChange={handleMarketChange} />
-            <div className="button-group">
-                <button onClick={handleSearch} className="news-search-button">{t('search')}</button>
-                <button onClick={handleClearResults} className="news-search-button">{t('clear_search')}</button>
-            </div>
-            {loadingNews && <p>Loading news...</p>}
-            {resultCount > 0 && (
-                <div style={{ justifyContent: "flex-end", display: "flex" }}>
-                    <p>{`Number of results: ${resultCount}`}</p>
+                <div className="input-group">
+                    <label htmlFor="search-news">Search News</label>
+                    <input
+                        type="text"
+                        id="search-news"
+                        placeholder="Search news..."
+                        className="news-search-input"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
                 </div>
-            )}
-            <div>
+                <div className="button-group">
+                    <button onClick={handleSearch} className="news-search-button">{t('search')}</button>
+                    <button onClick={handleClearResults} className="news-search-button">{t('clear_search')}</button>
+                </div>
+                {loadingNews && <p>Loading news...</p>}
+                {resultCount > 0 && (
+                    <div style={{ justifyContent: "flex-end", display: "flex" }}>
+                        <p>{`Number of results: ${resultCount}`}</p>
+                    </div>
+                )}
+            </div>
+            <div className="news-results">
                 {newsFeed.map((news, index) => (
                     <NewsSearchResult key={index} news={news} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage} />
                 ))}
