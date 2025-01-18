@@ -41,10 +41,10 @@ const mktOptions = [
     { label: 'United States (Spanish)', value: 'es-US' },
 ];
 
-const MktSelector = ({ value, onChange }) => {
+const MktSelector = ({ value, label, onChange }) => {
     return (
         <div className="input-group">
-            <label>Market</label>
+            <label>{label}</label>
             <select
                 className="news-search-select"
                 value={value}

@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import TwitterShare from '../TwitterShare/TwitterShare';
 import SummaryContainer from '../Summary/Summary';
 import './NewsSearchResult.css';
 
 const NewsSearchResult = ({ news }) => {
-
+    const { t } = useTranslation();
+    
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
@@ -28,7 +30,7 @@ const NewsSearchResult = ({ news }) => {
                 {news.description && (
                     <p className="news-description">{news.description}</p>
                 )}
-                <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">Read more</a></p>
+                <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">{t('read_news')}</a></p>
             </div>
             <SummaryContainer url={news.url} />
             <TwitterShare url={news.url} />

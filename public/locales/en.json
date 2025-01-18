@@ -7,5 +7,17 @@
     "logout": "Logout",
     "search": "Search",
     "clear_search": "Clear Search Results",
-    "topic": "Topic"
+    "search_from_region": "Search from Region",
+    "topic": "Topic",
+    "read_news": "Read News",
+    "get_summary": "Get Summary",
+    "summary": "Summary",
+    "new_insight": "New Insight",
+    "summary_language": "Summary Language",
+    "get_twitter_share": "Get Twitter Share",
+    "tweet_language": "Tweet Language",
+    "tweet_content": "Tweet Content",
+    "suggest_hashtags": "Suggest Hashtags",
+    "share_on_twitter": "Share on Twitter",
+    "instruction_to_image_gen_ai": "Suggest text to generate image"
   }

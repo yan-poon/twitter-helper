@@ -6,6 +6,18 @@
   "login": "登录",
   "logout": "登出",
   "search": "搜索",
-  "clear_search": "清初搜索结果",
-  "topic": "主题"
+  "clear_search": "清除搜索结果",
+  "search_from_region": "搜索地区",
+  "topic": "主题",
+  "read_news": "阅读新闻",
+  "get_summary": "获取摘要",
+  "summary": "摘要",
+  "new_insight": "新见解",
+  "summary_language": "摘要语言",
+  "get_twitter_share": "获取推特分享",
+  "tweet_language": "推文语言",
+  "tweet_content": "推文内容",
+  "suggest_hashtags": "建议标签",
+  "share_on_twitter": "在推特上分享",
+  "instruction_to_image_gen_ai": "建议文字以生成图片"
 }

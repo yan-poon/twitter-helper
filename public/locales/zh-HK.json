@@ -7,5 +7,17 @@
     "logout": "登出",
     "search": "搜索",
     "clear_search": "清除搜索結果",
-    "topic": "主題"
+    "search_from_region": "搜索地區",
+    "topic": "主題",
+    "read_news": "閱讀新聞",
+    "get_summary": "獲取摘要",
+    "summary": "摘要",
+    "new_insight": "新見解",
+    "summary_language": "摘要語言",
+    "get_twitter_share": "獲取Twitter分享",
+    "tweet_language": "推文語言",
+    "tweet_content": "推文內容",
+    "suggest_hashtags": "建議標籤",
+    "share_on_twitter": "在Twitter上分享",
+    "instruction_to_image_gen_ai": "建議文字以生成圖片"
   }
