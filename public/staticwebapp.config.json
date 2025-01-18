@@ -4,7 +4,7 @@
        "exclude": [
             "/static/media/*.{png,jpg,jpeg,gif,bmp}",
             "/static/css/*",
-            "/locales/*"
+            "/static/locales/*"
         ]
     },
     "mimeTypes": {
