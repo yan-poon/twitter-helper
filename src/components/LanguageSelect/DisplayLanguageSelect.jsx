@@ -12,8 +12,8 @@ const DisplayLanguageSelector = () => {
         <div className="language-select-container">
             <select onChange={changeLanguage} defaultValue={i18n.language}>
                 <option value="en">English</option>
-                <option value="zh-hk">繁體中文</option>
-                <option value="zh-cn">简体中文</option>
+                <option value="zh-HK">繁體中文</option>
+                <option value="zh-CN">简体中文</option>
             </select>
         </div>
     );

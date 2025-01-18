@@ -3,8 +3,7 @@
        "rewrite": "index.html",
        "exclude": [
             "/static/media/*.{png,jpg,jpeg,gif,bmp}",
-            "/static/css/*",
-            "/static/locales/*"
+            "/static/css/*"
         ]
     },
     "mimeTypes": {
