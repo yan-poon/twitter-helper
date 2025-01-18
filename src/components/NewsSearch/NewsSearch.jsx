@@ -62,7 +62,7 @@ const NewsSearch = () => {
                 <h1>{t('news_search')}</h1>
                 <MktSelector value={selectedMarket} onChange={handleMarketChange} />
                 <div className="input-group">
-                    <label htmlFor="search-news">Topic</label>
+                    <label htmlFor="search-news">{t('topic')}</label>
                     <input
                         type="text"
                         id="search-news"
