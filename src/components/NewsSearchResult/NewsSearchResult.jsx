@@ -3,7 +3,7 @@ import TwitterShare from '../TwitterShare/TwitterShare';
 import SummaryContainer from '../Summary/SummaryContainer';
 import './NewsSearchResult.css';
 
-const NewsSearchResult = ({ news, tweetLanguage = "English" }) => {
+const NewsSearchResult = ({ news }) => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
@@ -30,12 +30,8 @@ const NewsSearchResult = ({ news, tweetLanguage = "English" }) => {
                 )}
                 <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">Read more</a></p>
             </div>
-            <div>
-                <SummaryContainer url={news.url} />
-            </div>
-            <div>
-                <TwitterShare url={news.url} />
-            </div>
+            <SummaryContainer url={news.url} />
+            <TwitterShare url={news.url} />
         </div>
     );
 };

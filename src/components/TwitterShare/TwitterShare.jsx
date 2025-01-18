@@ -31,15 +31,14 @@ const TwitterShare = ({ url }) => {
 
     return (
         <div className="twitter-share-container">
-            <div>
+            <div className="language-button-group">
                 <LanguageSelect
                     label="Tweet Language"
                     value={tweetLanguage}
                     onChange={(e) => setTweetLanguage(e.target.value)}
                 />
-                <p><button className="news-search-button" onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button></p>
+                <button className="news-search-button" onClick={fetchTweetInfoFromApi}>Get Tweet Suggestion</button>
             </div>
-
             {loadingTweet && <p>Loading Tweet suggestion...</p>}
             {tweetInfo && (
                 <div>
@@ -57,7 +56,9 @@ const TwitterShare = ({ url }) => {
                         readOnly
                         className="twitter-share-textarea"
                     />
-                    <button onClick={shareOnTwitter} className="twitter-share-button">Share on Twitter</button>
+                    <div className="button-group">
+                        <button onClick={shareOnTwitter} className="twitter-share-button">Share on Twitter</button>
+                    </div>
                     <div>
                         <h5>Suggested Instruction for Image Gen AI</h5>
                         <textarea

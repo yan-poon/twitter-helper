@@ -21,13 +21,13 @@ const SummaryContainer = ({ url }) => {
 
     return (
         <div className="summary-container">
-            <div>
+            <div className="language-button-group">
                 <LanguageSelect
                     label="Summary Language"
                     value={summaryLanguage}
                     onChange={(e) => setSummaryLanguage(e.target.value)}
                 />
-                <p><button className="news-search-button" onClick={fetchSummaryFromApi}>Get Summary</button></p>
+                <button className="news-search-button" onClick={fetchSummaryFromApi}>Get Summary</button>
             </div>
             {loadingSummary && <p>Loading summary...</p>}
             {summary && (

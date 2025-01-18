@@ -62,7 +62,7 @@ const NewsSearch = () => {
                 <h1>{t('news_search')}</h1>
                 <MktSelector value={selectedMarket} onChange={handleMarketChange} />
                 <div className="input-group">
-                    <label htmlFor="search-news">Search News</label>
+                    <label htmlFor="search-news">Topic</label>
                     <input
                         type="text"
                         id="search-news"
@@ -86,7 +86,7 @@ const NewsSearch = () => {
             </div>
             <div className="news-results">
                 {newsFeed.map((news, index) => (
-                    <NewsSearchResult key={index} news={news}/>
+                    <NewsSearchResult key={index} news={news} />
                 ))}
             </div>
         </div>
