@@ -4,28 +4,16 @@ import { useTranslation } from 'react-i18next';
 import MktSelector from './MktSelector';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import { fetchNews } from '../../services/ApiService';
-import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './NewsSearch.css';
 
 const NewsSearch = () => {
     const { t } = useTranslation();
-
     const { getAccessTokenSilently } = useAuth0();
     const [query, setQuery] = useState('');
-    const [summaryLanguage, setSummaryLanguage] = useState(localStorage.getItem('summaryLanguage') || 'English');
-    const [tweetLanguage, setTweetLanguage] = useState(localStorage.getItem('tweetLanguage') || 'English');
     const [newsFeed, setNewsFeed] = useState([]);
-    const [resultCount, setResultCount] = useState(0); // State to keep track of the number of results
+    const [resultCount, setResultCount] = useState(0);
     const [selectedMarket, setSelectedMarket] = useState(localStorage.getItem('mkt') || 'en-US');
-    const [loadingNews, setLoadingNews] = useState(false); // State to track loading status
-
-    useEffect(() => {
-        localStorage.setItem('summaryLanguage', summaryLanguage);
-    }, [summaryLanguage]);
-
-    useEffect(() => {
-        localStorage.setItem('tweetLanguage', tweetLanguage);
-    }, [tweetLanguage]);
+    const [loadingNews, setLoadingNews] = useState(false);
 
     useEffect(() => {
         localStorage.setItem('mkt', selectedMarket);
@@ -72,16 +60,6 @@ const NewsSearch = () => {
         <div className="news-search-layout">
             <div className="news-search-container">
                 <h1>{t('news_search')}</h1>
-                <LanguageSelect
-                    label="Summary Language"
-                    value={summaryLanguage}
-                    onChange={(e) => setSummaryLanguage(e.target.value)}
-                />
-                <LanguageSelect
-                    label="Tweet Language"
-                    value={tweetLanguage}
-                    onChange={(e) => setTweetLanguage(e.target.value)}
-                />
                 <MktSelector value={selectedMarket} onChange={handleMarketChange} />
                 <div className="input-group">
                     <label htmlFor="search-news">Search News</label>
@@ -108,7 +86,7 @@ const NewsSearch = () => {
             </div>
             <div className="news-results">
                 {newsFeed.map((news, index) => (
-                    <NewsSearchResult key={index} news={news} summaryLanguage={summaryLanguage} tweetLanguage={tweetLanguage} />
+                    <NewsSearchResult key={index} news={news}/>
                 ))}
             </div>
         </div>
