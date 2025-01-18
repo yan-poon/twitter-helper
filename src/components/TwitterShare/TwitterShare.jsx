@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { fetchTweetInfo } from '../../services/ApiService';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './TwitterShare.css';
 
@@ -45,7 +46,9 @@ const TwitterShare = ({ url }) => {
                 />
                 <button className="news-search-button" onClick={fetchTweetInfoFromApi}>{t('get_twitter_share')}</button>
             </div>
-            {loadingTweet && <p>Loading Tweet suggestion...</p>}
+            {loadingTweet && (
+                <LoadingSpinner loading={loadingTweet} />
+            )}
             {tweetInfo && (
                 <div>
                     <h5>{t('suggest_hashtags')}</h5>

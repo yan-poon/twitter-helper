@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import MktSelector from './MktSelector';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
 import { fetchNews } from '../../services/ApiService';
@@ -77,10 +78,12 @@ const NewsSearch = () => {
                     <button onClick={handleSearch} className="news-search-button">{t('search')}</button>
                     <button onClick={handleClearResults} className="news-search-button">{t('clear_search')}</button>
                 </div>
-                {loadingNews && <p>Loading news...</p>}
+                {loadingNews && ((
+                    <LoadingSpinner loading={loadingNews} />
+                ))}
                 {resultCount > 0 && (
                     <div style={{ justifyContent: "flex-end", display: "flex" }}>
-                        <p>{`Number of results: ${resultCount}`}</p>
+                        <p>{`${t('number_of_results')}: ${resultCount}`}</p>
                     </div>
                 )}
             </div>

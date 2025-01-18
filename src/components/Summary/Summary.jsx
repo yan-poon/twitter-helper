@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { fetchSummary } from '../../services/ApiService';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './Summary.css';
@@ -35,7 +36,9 @@ const SummaryContainer = ({ url }) => {
                 />
                 <button className="news-search-button" onClick={fetchSummaryFromApi}>{t('get_summary')}</button>
             </div>
-            {loadingSummary && <p>Loading summary...</p>}
+            {loadingSummary && (
+                <LoadingSpinner loading={loadingSummary} />
+            )}
             {summary && (
                 <div>
                     <h3>{t('new_insight')}</h3>
