@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { fetchSummary } from '../../services/ApiService';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
-import './SummaryContainer.css';
+import './Summary.css';
 
 const SummaryContainer = ({ url }) => {
     const [summary, setSummary] = useState('');

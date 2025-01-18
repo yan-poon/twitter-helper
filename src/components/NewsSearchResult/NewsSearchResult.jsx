@@ -1,6 +1,6 @@
 import React from 'react';
 import TwitterShare from '../TwitterShare/TwitterShare';
-import SummaryContainer from '../Summary/SummaryContainer';
+import SummaryContainer from '../Summary/Summary';
 import './NewsSearchResult.css';
 
 const NewsSearchResult = ({ news }) => {
