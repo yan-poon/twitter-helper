@@ -20,6 +20,7 @@ const Header = ({ isAuthenticated, isLoading }) => {
                     {!isLoading && isAuthenticated && (
                         <>
                             <li><Link to="/news-search">{t('news_search')}</Link></li>
+                            <li><Link to="/webpage-analysis">{t('webpage_analysis')}</Link></li>
                         </>
                     )}
                 </ul>
