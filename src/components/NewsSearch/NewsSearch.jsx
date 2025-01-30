@@ -30,7 +30,7 @@ const NewsSearch = () => {
         setLoadingNews(true);
         try {
             const accessToken = await getAccessTokenSilently();
-            const response = await fetchWebpages(query, selectedMarket, accessToken);
+            const response = await fetchWebpages(query, selectedMarket, accessToken, 500, 0);
             setNewsFeed(response.webpages);
             setResultCount(response.count);
             if (response.count === 0) {
