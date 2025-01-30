@@ -23,14 +23,20 @@ const NewsSearchResult = ({ news }) => {
                 {news.name && (
                     <h2 className="news-title">{news.name}</h2>
                 )}
-                {
-                    news.datePublished && (
+                {news.datePublished && (
                         <p>{formatDate(news.datePublished)}</p>
                     )}
                 {news.description && (
                     <p className="news-description">{news.description}</p>
                 )}
-                <p><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">{t('read_news')}</a></p>
+                <div className='news-url'>
+                    {news.tag && (
+                        <span className={news.tag === 'WEBPAGE' ? 'tag-webpage' : 'tag-other'}>
+                            {news.tag}
+                        </span>
+                    )}
+                    <span><a href={news.url} target="_blank" rel="noopener noreferrer" className="news-link">{t('read_news')}</a></span>
+                </div>
             </div>
             <SummaryContainer url={news.url} />
             <TwitterShare url={news.url} />

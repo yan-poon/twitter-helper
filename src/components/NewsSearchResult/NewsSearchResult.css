@@ -147,3 +147,25 @@
         font-size: 0.9em;
     }
 }
+
+.tag-webpage {
+    color: white;
+    background-color: orange;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.tag-other {
+    color: white;
+    background-color: purple;
+    padding: 2px 5px;
+    border-radius: 3px;
+    margin: 10px;
+}
+
+.news-url {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -13,8 +13,8 @@ export const fetchNews = async (query, mkt, accessToken,count=20, offset=0) => {
     return data;
 };
 
-export const fetchWebpages = async (query, accessToken,count=20, offset=0) => {
-    const response = await fetch(`${API_BASE_URL}/bing-search?q=${query}&count=${count}&offset=${offset}`, {
+export const fetchWebpages = async (query,mkt,accessToken,count=20, offset=0) => {
+    const response = await fetch(`${API_BASE_URL}/bing-search?q=${query}&count=${count}&offset=${offset}&mkt=${mkt}`, {
         headers: {
             'Content-Type': 'application/json',
             'x-functions-key': API_KEY,

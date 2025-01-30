@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import MktSelector from './MktSelector';
 import NewsSearchResult from '../NewsSearchResult/NewsSearchResult';
-import { fetchNews } from '../../services/ApiService';
+import { fetchNews, fetchWebpages } from '../../services/ApiService';
 import './NewsSearch.css';
 
 const NewsSearch = () => {
@@ -30,8 +30,8 @@ const NewsSearch = () => {
         setLoadingNews(true);
         try {
             const accessToken = await getAccessTokenSilently();
-            const response = await fetchNews(query, selectedMarket, accessToken);
-            setNewsFeed(response.news_feed);
+            const response = await fetchWebpages(query, selectedMarket, accessToken);
+            setNewsFeed(response.webpages);
             setResultCount(response.count);
             if (response.count === 0) {
                 alert('No news was found');

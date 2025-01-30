@@ -4,7 +4,7 @@ import TwitterShare from '../TwitterShare/TwitterShare';
 import SummaryContainer from '../Summary/Summary';
 import './WebpageAnalysis.css';
 
-const WebpageAnalysis = ({ news }) => {
+const WebpageAnalysis = () => {
     const { t } = useTranslation();
     const [url, setUrl] = useState('');
 
