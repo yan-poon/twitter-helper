@@ -43,8 +43,8 @@ export const fetchTweetInfo = async (news, tweetLanguage, accessToken) => {
     return data
 };
 
-export const fetchSummary = async (news, summaryLanguage, accessToken) => {
-    const response = await fetch(`${API_BASE_URL}/openai-summary?summaryLanguage=${summaryLanguage}`, {
+export const fetchSummary = async (news, summaryLanguage, assistantType ,accessToken) => {
+    const response = await fetch(`${API_BASE_URL}/openai-summary?summaryLanguage=${summaryLanguage}&assistType=${assistantType}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
