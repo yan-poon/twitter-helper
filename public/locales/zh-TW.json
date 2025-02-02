@@ -22,5 +22,6 @@
     "share_on_twitter": "在Twitter上分享",
     "instruction_to_image_gen_ai": "建議文字以生成圖片",
     "assistant_type": "助手類型",
-    "future_opportunity": "未來機會"
+    "future_opportunity": "未來機會",
+    "extra_instruction" : "額外指示"
   }

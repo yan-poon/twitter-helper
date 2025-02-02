@@ -22,5 +22,6 @@
     "share_on_twitter": "Twitterでシェア",
     "instruction_to_image_gen_ai": "画像を生成するためのテキストを提案",
     "assistant_type": "アシスタントタイプ",
-    "future_opportunity": "将来の機会"
+    "future_opportunity": "将来の機会",
+    "extra_instruction" : "追加の指示"
 }

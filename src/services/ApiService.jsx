@@ -52,8 +52,7 @@ export const fetchSummary = async (news, summaryLanguage, assistantType ,accessT
             'Authorization': `Bearer ${accessToken}`
         },
         body: JSON.stringify({
-            name: news.name,
-            description: news.description,
+            extraInstruction: news.extraInstruction,
             url: news.url
         })
     });

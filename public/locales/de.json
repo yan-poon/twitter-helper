@@ -22,5 +22,6 @@
     "share_on_twitter": "Auf Twitter teilen",
     "instruction_to_image_gen_ai": "Text vorschlagen, um ein Bild zu generieren",
     "assistant_type": "Assistententyp",
-    "future_opportunity": "Zukünftige Möglichkeiten"
+    "future_opportunity": "Zukünftige Möglichkeiten",
+    "extra_instruction" : "Zusätzliche Anweisung"
 }

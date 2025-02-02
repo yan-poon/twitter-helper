@@ -4,13 +4,15 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { fetchSummary } from '../../services/ApiService';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import AssistantTypeInput from '../AssistantType/AssistantTypeInput';
+import ExtraInstructionInput from '../ExtraInstruction/ExtraInstructionInput';
 import './Summary.css';
 
 const SummaryContainer = ({ url }) => {
     const { t } = useTranslation();
     const [summary, setSummary] = useState('');
     const [summaryLanguage, setSummaryLanguage] = useState(localStorage.getItem('summaryLanguage') || 'English');
-    const [summaryAssistantType, setSummaryAssistantType] = useState(localStorage.getItem('summaryAssistantType') ||'Professional Personal Assistant');
+    const [summaryAssistantType, setSummaryAssistantType] = useState(localStorage.getItem('summaryAssistantType') || 'Professional Personal Assistant');
+    const [summaryExtraInstruction, setSummaryExtraInstruction] = useState('');
     const [loadingSummary, setLoadingSummary] = useState(false);
 
     useEffect(() => {
@@ -22,7 +24,8 @@ const SummaryContainer = ({ url }) => {
         setLoadingSummary(true);
         setSummary('');
         const request = {
-            'url': url
+            url: url,
+            extraInstruction: summaryExtraInstruction,
         }
         const response = await fetchSummary(request, summaryLanguage, summaryAssistantType);
         setSummary(response.info);
@@ -31,6 +34,9 @@ const SummaryContainer = ({ url }) => {
     const handleSummaryAssistantTypeChange = (e) => {
         setSummaryAssistantType(e.target.value);
     };
+    const handleSummaryExtraInstructionChange = (e) => {
+        setSummaryExtraInstruction(e.target.value);
+    }
 
     return (
         <div className="summary-container">
@@ -45,6 +51,12 @@ const SummaryContainer = ({ url }) => {
                     onChange={handleSummaryAssistantTypeChange}
                     placeholder={t('assistant_type')}
                     label={t('assistant_type')}
+                />
+                <ExtraInstructionInput
+                    value={summaryExtraInstruction}
+                    onChange={handleSummaryExtraInstructionChange}
+                    placeholder={t('extra_instruction')}
+                    label={t('extra_instruction')}
                 />
                 <button className="news-search-button" onClick={fetchSummaryFromApi}>{t('get_summary')}</button>
             </div>
