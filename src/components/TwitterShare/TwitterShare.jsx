@@ -4,6 +4,7 @@ import { fetchTweetInfo } from '../../services/ApiService';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import LanguageSelect from '../LanguageSelect/LanguageSelect';
 import './TwitterShare.css';
+import AssistantTypeInput from '../AssistantType/AssistantTypeInput';
 
 const TwitterShare = ({ url }) => {
     const { t } = useTranslation();
@@ -11,24 +12,30 @@ const TwitterShare = ({ url }) => {
     const [tweetText, setTweetText] = useState(null);
     const [loadingTweet, setLoadingTweet] = useState(false);
     const [tweetLanguage, setTweetLanguage] = useState(localStorage.getItem('tweetLanguage') || 'English');
+    const [twitterAssistantType, setTwitterAssistantType] = useState(localStorage.getItem('twitterAssistantType') || 'SEO Expert');
     const textareaRef = useRef(null);
 
     useEffect(() => {
         localStorage.setItem('tweetLanguage', tweetLanguage);
-    }, [tweetLanguage]);
+        localStorage.setItem('twitterAssistantType', twitterAssistantType);
+    }, [tweetLanguage, twitterAssistantType]);
 
     const fetchTweetInfoFromApi = async () => {
         setLoadingTweet(true);
         setTweetInfo(null);
         const request = {
             'name': '',
-            'description':'',
+            'description': '',
             'url': url
         }
-        const response = await fetchTweetInfo(request, tweetLanguage);
+        const response = await fetchTweetInfo(request, tweetLanguage, twitterAssistantType);
         setTweetInfo(response.tweet);
         setTweetText(response.tweet.tweet);
         setLoadingTweet(false);
+    };
+
+    const handleTwitterAssistantTypeChange = (e) => {
+        setTwitterAssistantType(e.target.value);
     };
 
     const shareOnTwitter = () => {
@@ -43,6 +50,12 @@ const TwitterShare = ({ url }) => {
                     label={t('tweet_language')}
                     value={tweetLanguage}
                     onChange={(e) => setTweetLanguage(e.target.value)}
+                />
+                <AssistantTypeInput
+                    value={twitterAssistantType}
+                    onChange={handleTwitterAssistantTypeChange}
+                    placeholder={t('assistant_type')}
+                    label={t('assistant_type')}
                 />
                 <button className="news-search-button" onClick={fetchTweetInfoFromApi}>{t('get_twitter_share')}</button>
             </div>

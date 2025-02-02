@@ -25,8 +25,8 @@ export const fetchWebpages = async (query,mkt,accessToken,count=20, offset=0) =>
     return data;
 };
 
-export const fetchTweetInfo = async (news, tweetLanguage, accessToken) => {
-    const response = await fetch(`${API_BASE_URL}/openai-tweet?tweetLanguage=${tweetLanguage}`, {
+export const fetchTweetInfo = async (news, tweetLanguage, assistantType ,accessToken) => {
+    const response = await fetch(`${API_BASE_URL}/openai-tweet?tweetLanguage=${tweetLanguage}&assistantType=${assistantType}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
