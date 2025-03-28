@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { useTranslation } from 'react-i18next';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import MktSelector from './MktSelector';
@@ -9,7 +8,6 @@ import './NewsSearch.css';
 
 const NewsSearch = () => {
     const { t } = useTranslation();
-    const { getAccessTokenSilently } = useAuth0();
     const [query, setQuery] = useState('');
     const [newsFeed, setNewsFeed] = useState([]);
     const [resultCount, setResultCount] = useState(0);
@@ -29,7 +27,7 @@ const NewsSearch = () => {
         setNewsFeed([]); // Clean up previous results
         setLoadingNews(true);
         try {
-            const accessToken = await getAccessTokenSilently();
+            const accessToken = ''
             const response = await fetchWebpages(query, selectedMarket, accessToken, 500, 0);
             setNewsFeed(response.webpages);
             setResultCount(response.count);
